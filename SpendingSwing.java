@@ -135,6 +135,7 @@ public class SpendingSwing{
 			List<String> categoriesList = new ArrayList<>();
 			//read the file
 	        try (BufferedReader br = new BufferedReader(new FileReader(selectedfile2))){
+	        	br.readLine();
 	            while ((line = br.readLine()) != null) {
 	            	columns = line.split(",");//read every line and put each word in an array
 	            	categories.add(columns[1]); //categorize the data based on column 1 and store them in a set
@@ -156,15 +157,18 @@ public class SpendingSwing{
 	       	    //read the file ***SECOND TIME*** 
 	       	    try (BufferedReader br = new BufferedReader(new FileReader(selectedfile2))){
 	       	    	//each every line, compare column 1 with every category, if category matches column1, then add
-	           		while ((line = br.readLine()) != null) {
+	       	    	br.readLine();
+	       	    	while ((line = br.readLine()) != null) {
 	          		//read every line and put each word in an array
 	          			
 	          		columns2 = line.split(",");
 	          		cal.setTime(df.parse(columns2[0]));
 	            	month = cal.getDisplayName(Calendar.MONTH, Calendar.LONG_FORMAT, Locale.US);
 	          		
-	           		if(columns2[1].matches(categoriesList.get(x))){
-	           			
+	           		if(columns2[1].matches(categoriesList.get(x)))
+	           			//&& categoriesList.get(x).equals("Amazon")
+	           		{          				
+	           			//System.out.println();
 	           			
 	           			switch(month){
 	           				case "January":
@@ -183,7 +187,7 @@ public class SpendingSwing{
 	           				case "February":
 	           					if(columns2[4].equals("debit"))
 	    	           			{
-	    	           				febValue = janValue + Double.parseDouble(columns2[3]);
+	    	           				febValue = febValue + Double.parseDouble(columns2[3]);
 	    	           			} else 
 	    	           			{
 	    	           				febValue = febValue - Double.parseDouble(columns2[3]);
@@ -194,7 +198,7 @@ public class SpendingSwing{
 	           				case "March":
 	           					if(columns2[4].equals("debit"))
 	    	           			{
-	    	           				marValue = janValue + Double.parseDouble(columns2[3]);
+	    	           				marValue = marValue + Double.parseDouble(columns2[3]);
 	    	           			} else 
 	    	           			{
 	    	           				marValue = marValue - Double.parseDouble(columns2[3]);
@@ -205,7 +209,7 @@ public class SpendingSwing{
 	           				case "April":
 	           					if(columns2[4].equals("debit"))
 	    	           			{
-	    	           				aprValue = janValue + Double.parseDouble(columns2[3]);
+	    	           				aprValue = aprValue + Double.parseDouble(columns2[3]);
 	    	           			} else 
 	    	           			{
 	    	           				aprValue = aprValue - Double.parseDouble(columns2[3]);
@@ -216,7 +220,7 @@ public class SpendingSwing{
 	           				case "May":
 	           					if(columns2[4].equals("debit"))
 	    	           			{
-	    	           				mayValue = janValue + Double.parseDouble(columns2[3]);
+	    	           				mayValue = mayValue + Double.parseDouble(columns2[3]);
 	    	           			} else 
 	    	           			{
 	    	           				mayValue = mayValue - Double.parseDouble(columns2[3]);
@@ -227,7 +231,7 @@ public class SpendingSwing{
 	           				case "June":           				
 	           					if(columns2[4].equals("debit"))
 	    	           			{
-	    	           				junValue = janValue + Double.parseDouble(columns2[3]);
+	           						junValue = junValue + Double.parseDouble(columns2[3]);
 	    	           			} else 
 	    	           			{
 	    	           				junValue = junValue - Double.parseDouble(columns2[3]);
@@ -322,7 +326,8 @@ public class SpendingSwing{
 	           e.printStackTrace();
 	       } 
 		}
-	    return doubleMap;		
+	    return doubleMap;
+	   
 	}
 
 	public File selectFile() {
